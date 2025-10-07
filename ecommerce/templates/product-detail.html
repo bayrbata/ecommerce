@@ -78,12 +78,15 @@
           <hr>
 
           {% if product.stock > 0 %}
+            <p class="text-success">Stock: {{ product.stock }} available</p>
             <a href="{% url 'cart' %}" class="btn btn-primary">
-              <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>
+                <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>
             </a>
           {% else %}
-            <span class="text">no sales product</span>
+            <p class="text-danger">Out of stock</p>
+            <button class="btn btn-secondary" disabled>Not available</button>
           {% endif %}
+
         </article>
       </main>
 
