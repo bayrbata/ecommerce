@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Product
 import sqlite3
 
@@ -16,8 +16,9 @@ def dashboard(request):
 def order_complete(request):
     return render(request, "order_complete.html")
 
-def product_detail(request):
-    return render(request, "product-detail.html")
+def product_detail(request, product_slug):
+    product = get_object_or_404(Product, slug=product_slug)
+    return render(request, 'product-detail.html', {'product': product})
 
 def register(request):
     return render(request, "register.html")
@@ -28,15 +29,13 @@ def search_result(request):
 def signin(request):
     return render(request, "signin.html")
 
-def store(request):
-    # products = Product.objects.all().order_by
-    with sqlite3.connect("db.sqlite3") as conn:
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM shop_app_product ")
-        rows = cursor.fetchall()
+def store(request, category_slug=None):
+    if category_slug:
+        products = Product.objects.filter(category__slug=category_slug, is_available=True)
+    else:
+        products = Product.objects.filter(is_available=True)
 
-    return render(request, "store.html", {'products': rows})
+    return render(request, "store.html", {'products': products})
 
 def place_order(request):
     return render(request, "place-order.html")

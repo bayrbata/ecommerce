@@ -91,7 +91,7 @@ $(document).ready(function() {
 			</button>
 			<div class="dropdown-menu">
 				{% for cat in categories %}
-					<a class="dropdown-item" href="#">{{ cat.category_name }}</a>
+					<a class="dropdown-item" href="{% url 'products_by_category' cat.slug %}">{{ cat.category_name }}</a>
 				{% empty %}
 					<a class="dropdown-item disabled" href="#">No categories</a>
 				{% endfor %}
