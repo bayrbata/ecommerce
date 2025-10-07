@@ -16,8 +16,8 @@ def dashboard(request):
 def order_complete(request):
     return render(request, "order_complete.html")
 
-def product_detail(request, product_slug):
-    product = get_object_or_404(Product, slug=product_slug)
+def product_detail(request, category_slug, product_slug):
+    product = get_object_or_404(Product, category__slug=category_slug, slug=product_slug)
     return render(request, 'product-detail.html', {'product': product})
 
 def register(request):
