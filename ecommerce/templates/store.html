@@ -134,7 +134,19 @@
 						<span class="price">{{ p.price }}₮</span>
 						<del class="price-old">{{ p.price|add:"10000" }}₮</del>
 					</div>
+					{% if p.stock > 0 %}
+						<p class="text-success">Stock: {{ p.stock }} available</p>
+					{% else %}
+						<p class="text-danger">Out of stock</p>
+					{% endif %}
 				</figcaption>
+				{% if p.stock > 0 %}
+					<a href="{% url 'cart' %}" class="btn btn-primary">
+						<span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>
+					</a>
+				{% else %}
+					<button class="btn btn-secondary" disabled>Not available</button>
+				{% endif %}
 			</figure>
 		</div>
 	{% endfor %}
