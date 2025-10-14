@@ -21,16 +21,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', views.index, name="index"),
     path('cart/', views.cart, name="cart"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('order-complete/', views.order_complete, name="order_complete"),
-    path('<slug:category_slug>/<slug:product_slug>/', views.product_detail, name='product_detail'),
     path('register/', views.register, name="register"),
     path('search-result/', views.search_result, name="search_result"),
     path('signin/', views.signin, name="signin"),
     path('store/', views.store, name="store"),
-    path('<slug:category_slug>/', views.store, name="products_by_category"),
     path('place_order/', views.place_order, name="place_order"),
-    path('admin/', admin.site.urls),
+    path('<slug:category_slug>/<slug:product_slug>/', views.product_detail, name='product_detail'),
+    path('<slug:category_slug>/', views.store, name="products_by_category"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

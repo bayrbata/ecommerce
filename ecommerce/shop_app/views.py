@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product
+from django.core.paginator import Paginator
 import sqlite3
 
 # Create your views here.
@@ -34,8 +35,12 @@ def store(request, category_slug=None):
         products = Product.objects.filter(category__slug=category_slug, is_available=True)
     else:
         products = Product.objects.filter(is_available=True)
+        
+    p = Paginator(products, 3)
+    page = request.GET.get('page')
+    paged_products = p.get_page(page)
 
-    return render(request, "store.html", {'products': products})
+    return render(request, "store.html", {'products': paged_products})
 
 def place_order(request):
     return render(request, "place-order.html")
